@@ -8,7 +8,8 @@ import (
     "strconv"
     "time"
     "strings"
-    "math/rand"    
+    "math/rand"
+    "net/http"
     "github.com/nimiri/go-shnmk16"
     "github.com/nimiri/go-jisx0208"
     tm "github.com/buger/goterm"
@@ -64,12 +65,12 @@ func main() {
         }
             
         // フォントのファイルを開く
-        fpFull, err := os.Open("./assets/shnmk16.bdf")
+        fpFull, err := Assets.Open("/assets/shnmk16.bdf")
         if err != nil {
             panic(err)
         }
         defer fpFull.Close()
-        fpHalf, err := os.Open("./assets/shnm8x16.bdf")
+        fpHalf, err := Assets.Open("/assets/shnm8x16.bdf")
         if err != nil {
             panic(err)
         }
@@ -77,7 +78,7 @@ func main() {
 
         // offsetの配列を渡して、Bitmapの配列を取得
         bitmaps := []string{}
-        var fp *os.File
+        var fp http.File
         for i := 0; i < lenInputStr; i++ {
 
             if codes[i] < 255 {
